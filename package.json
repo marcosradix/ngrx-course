@@ -26,6 +26,7 @@
     "@angular/platform-browser-dynamic": "^11.0.0",
     "@angular/router": "^11.0.0",
     "@ngrx/data": "^8.0.1",
+    "@ngrx/devtools": "^1.4.0",
     "@ngrx/effects": "^8.0.1",
     "@ngrx/entity": "^8.0.1",
     "@ngrx/router-store": "^8.0.1",
@@ -41,7 +42,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.1",
-    "@angular/cli": "^11.0.1",
+    "@angular/cli": "^11.2.3",
     "@angular/compiler-cli": "^11.0.0",
     "@angular/language-service": "^11.0.0",
     "@ngrx/schematics": "^8.0.1",
