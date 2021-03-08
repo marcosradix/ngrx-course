@@ -1,4 +1,4 @@
-import { logout } from './auth/auth.actions';
+import { logout, login } from './auth/auth.actions';
 import { AppState } from './reducers/index';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from "@ngrx/store";
@@ -24,6 +24,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userProfile = localStorage.getItem("user");
+    if (userProfile) {
+      this.store.dispatch(login({ user: JSON.parse(userProfile) }));
+    }
+
     this.isLoggedIn$ = this.store.pipe(
       select(isLoggedId)
     );
@@ -53,7 +58,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.store.dispatch(logout());
-    
+
   }
 
 }
