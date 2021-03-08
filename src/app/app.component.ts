@@ -1,9 +1,11 @@
+import { logout } from './auth/auth.actions';
 import { AppState } from './reducers/index';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { isLoggedId, isLoggedOut } from './auth/auth.selectors';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +25,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn$ = this.store.pipe(
-      map(state => !!state['auth']['user'])
+      select(isLoggedId)
     );
 
     this.router.events.subscribe(event => {
@@ -45,12 +47,13 @@ export class AppComponent implements OnInit {
       }
     });
     this.isLoggedOut$ = this.store.pipe(
-      map(state => !state['auth']['user'])
+      select(isLoggedOut)
     )
   }
 
   logout() {
-
+    this.store.dispatch(logout());
+    
   }
 
 }

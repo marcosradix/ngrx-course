@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth/auth.guard';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
@@ -27,6 +28,7 @@ import { reducers, metaReducers } from './reducers';
 const routes: Routes = [
   {
     path: 'courses',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
   },
   {
@@ -54,7 +56,8 @@ const routes: Routes = [
     MatToolbarModule,
     AuthModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([])
   ],
   bootstrap: [AppComponent]
 })
