@@ -1,5 +1,7 @@
+import { areCoursesLoaded } from './courses.selector';
+import { select } from '@ngrx/store';
 import { loadAllCourses } from './course.actions';
-import { tap, first, finalize } from 'rxjs/operators';
+import { tap, first, finalize, filter } from 'rxjs/operators';
 import { AppState } from './../reducers/index';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,8 +16,9 @@ export class CoursesResolver implements Resolve<any>{
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this.store.pipe(
-            tap(() => {
-                if (!this.loading) {
+            select(areCoursesLoaded),
+            tap((coursesLoaded) => {
+                if (!this.loading && !coursesLoaded) {
                     this.loading = true;
                     this.store.dispatch(loadAllCourses())
 
@@ -23,6 +26,7 @@ export class CoursesResolver implements Resolve<any>{
             }
 
             ),
+            filter(coursesLoaded => coursesLoaded),
             first(),
             finalize(() => this.loading= false)
         );
